@@ -26,20 +26,8 @@ def response(input_sentence):
 
 
 if __name__ == "__main__":
-    sents = ['一岁宝宝发烧能吃啥药', "who are you?"]
-    for s in sents:
-        q = generate_prompt(s)
-        inputs = tokenizer(q, return_tensors="pt").to(device=device)
-        generate_ids = model.generate(**inputs, max_new_tokens=200,
-                                      # do_sample=True,
-                                      # top_p=0.85,
-                                      # temperature=1.0,
-                                      # repetition_penalty=1.0,
-                                      # eos_token_id=tokenizer.eos_token_id,
-                                      # bos_token_id=tokenizer.bos_token_id,
-                                      # pad_token_id=tokenizer.pad_token_id,
-                                      )
-        output = tokenizer.batch_decode(
-            generate_ids, skip_special_tokens=True)[0]
-        print(output)
-        print()
+    while (1):
+        s = input()
+        if s == 'q':
+            break
+        response(s)
