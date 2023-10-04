@@ -45,5 +45,23 @@ def question():
     #
 
 
+@app.route("/query", methods=['GET', 'POST'])
+def query():
+    if request.method == 'GET':
+        return render_template("query.html", answer="")
+    else:
+        form = DialForm(request.form)
+        if form.content.data == "":
+            return render_template("query.html", answer="")
+        else:
+            answer = form.content.data + '\n'
+            sentence = form.content.data
+
+            answer = format_response(sentence).split("Response:")[1].strip()
+
+            # print(answer)
+            return render_template("query.html", answer=answer)
+
+
 if __name__ == '__main__':
     app.run(port=7860)

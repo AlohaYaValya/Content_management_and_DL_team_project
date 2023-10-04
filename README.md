@@ -8,8 +8,10 @@ The model needs at least 14G+ GPU memory when load by float16, 40G+ when load by
 
 pip install requirements.txt -r
 
-run medical_llama.py to directly chat.
+run medical_llama.py to directly chat or query.
 
-run app.py to chat in a web.
+run app.py to chat or query in a web.
 
-![示例图片](./image/README/test.png)
+![test](./image/README/test.png)
+
+![test2](./image/README/test2.png)
