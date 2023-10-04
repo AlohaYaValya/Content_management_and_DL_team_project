@@ -23,6 +23,7 @@ def response(input_sentence):
     output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True)[0]
     print(output)
     print()
+    return output
 
 
 if __name__ == "__main__":
