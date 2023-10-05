@@ -4,9 +4,9 @@ from transformers import LlamaForCausalLM, LlamaTokenizer
 import torch
 
 model = LlamaForCausalLM.from_pretrained(
-    "shibing624/ziya-llama-13b-medical-merged", load_in_4bit=True, device_map='auto')
+    "shibing624/ziya-llama-13b-medical-merged", load_in_8bit=True, device_map='auto')
 tokenizer = LlamaTokenizer.from_pretrained(
-    "shibing624/ziya-llama-13b-medical-merged", load_in_4bit=True)
+    "shibing624/ziya-llama-13b-medical-merged", load_in_8bit=True)
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
