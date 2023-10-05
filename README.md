@@ -4,7 +4,7 @@
 
 I've found a [Medical LLaMA-13B Model](https://huggingface.co/shibing624/ziya-llama-13b-medical-merged), which can response the medical problem wonderful.
 
-The model needs at least 14G+ GPU memory when load by float16, 40G+ when load by float32.
+The model needs at least 14G+ GPU memory when load_in_8bit, 40G+ when load by float32.
 
 pip install requirements.txt -r
 
@@ -15,7 +15,6 @@ run app.py to chat or query in a web.
 ![test](./image/README/test.png)
 
 ![test2](./image/README/test2.png)
-
 
 #### code framework
 
