@@ -1,6 +1,6 @@
 # Content management and DL - team project
 
-## Large language model with digital library for medicine
+## Large language model with digital library for medical
 
 I've found a [Medical LLaMA-13B Model](https://huggingface.co/shibing624/ziya-llama-13b-medical-merged), which can response the medical problem wonderful.
 
@@ -15,3 +15,14 @@ run app.py to chat or query in a web.
 ![test](./image/README/test.png)
 
 ![test2](./image/README/test2.png)
+
+
+#### code framework
+
+app.py :  a web server
+
+medical_llama.py : the medical llama model
+
+templates : html objects
+
+static : css/images/js
