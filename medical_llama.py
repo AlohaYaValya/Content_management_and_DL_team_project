@@ -5,6 +5,26 @@ import torch
 
 patient_data = [
     {
+        "description": "Severe headache, nausea, vomiting, and sensitivity to light.",
+        "disease_name": "Meningitis"
+    },
+    {
+        "description": "Difficulty breathing, wheezing, and chest tightness.",
+        "disease_name": "Asthma"
+    },
+    {
+        "description": "Frequent urination, excessive thirst, and unexplained weight loss.",
+        "disease_name": "Diabetes mellitus (Type 1)"
+    },
+    {
+        "description": "Fatigue, muscle weakness, and joint pain.",
+        "disease_name": "Fibromyalgia"
+    },
+    {
+        "description": "Redness, swelling, and pain in the joints, especially in the knee.",
+        "disease_name": "Rheumatoid Arthritis"
+    },
+    {
         "description": "Runny nose, sneezing, and mild fever.",
         "disease_name": "Common cold"
     },
@@ -133,11 +153,11 @@ def task_response(input_sentence):
 
 
 if __name__ == "__main__":
-    while (1):
-        s = input()
-        if s == 'q':
-            break
-        format_response(s)
-for patient in patient_data:
-    a = task_response(patient["description"])
-    print(patient["disease_name"])
+    # while (1):
+    #     s = input()
+    #     if s == 'q':
+    #         break
+    #     format_response(s)
+    for patient in patient_data:
+        a = task_response(patient["description"])
+        print(patient["disease_name"])
