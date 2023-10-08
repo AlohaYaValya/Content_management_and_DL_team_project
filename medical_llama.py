@@ -95,20 +95,24 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 
 def generate_prompt(instruction):
-    return f"""Below is an instruction that describes a task. 
-    Write a response that appropriately completes the request.
-    \n\n### Instruction:{instruction}\n\n### Response: """
+    return f"""## role
+    Suggest you are a professional doctor; you need to answer the medical question from patients. 
+    ## Question: {instruction}
+    ## Response: """
 
 
 def format_prompt(instruction, f=0):
     s = ['Disease', 'Symptom']
-    return f"""Below is a disease or a symptom related to a disease. 
-    Suggest you are the best doctor.
-    Please provide detailed information about the disease
-      as a response in the following format: 
+    return f"""## role
+    Suggest you are a professional doctor; you need to provide detailed information about the disease.
+    ## task
+    Below is a disease or a symptom related to a disease. 
+    Please provide detailed information about the disease as a response in the following format: 
     'Disease Name: [Disease Name] \nCauses: [Causes] \nSymptoms: [Symptoms] \nTreatment: [Treatment].\n' 
     Please provide the relevant information.
-    \n\n### {s[f]}:{instruction}\n\n### Response: """
+
+    ## {s[f]}: {instruction}
+    ## Response: """
 
 
 def task_prompt(instruction):
@@ -148,7 +152,7 @@ def task_response(input_sentence):
     inputs = tokenizer(q, return_tensors="pt").to(device=device)
     generate_ids = model.generate(**inputs, max_new_tokens=150)
     output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True)[0]
-    print(output.split("Response: ")[1].strip())
+    # print(output.split("Response: ")[1].strip())
     return output.split("Response: ")[1].strip()
 
 
@@ -159,5 +163,7 @@ if __name__ == "__main__":
     #         break
     #     format_response(s)
     for patient in patient_data:
+        print(patient["description"])
         a = task_response(patient["description"])
-        print(patient["disease_name"])
+        print("res :", a)
+        print('true:', patient["disease_name"])
