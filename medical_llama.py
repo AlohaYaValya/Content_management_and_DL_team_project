@@ -1,5 +1,5 @@
 import sys
-from peft import PeftModel
+# from peft import PeftModel
 from transformers import LlamaForCausalLM, LlamaTokenizer
 import torch
 
@@ -88,10 +88,10 @@ patient_data = [
 
 
 model = LlamaForCausalLM.from_pretrained(
-    "shibing624/ziya-llama-13b-medical-merged", load_in_8bit=True, device_map='auto')
+    "shibing624/ziya-llama-13b-medical-merged", device_map='auto').half()
 tokenizer = LlamaTokenizer.from_pretrained(
-    "shibing624/ziya-llama-13b-medical-merged", load_in_8bit=True)
-device = "cuda" if torch.cuda.is_available() else "cpu"
+    "shibing624/ziya-llama-13b-medical-merged", truncation=True, truncation_side='left')
+device = "cuda"
 
 
 def generate_prompt(instruction):
@@ -127,6 +127,17 @@ def task_prompt(instruction):
     ## Response: """
 
 
+def transcripts_prompt(instruction):
+    return f"""## task
+    Suggest you are a professional doctor.
+    Below is a information of the patient's condition.
+    Please response only one Key Word about the medical transcription.
+    ## Information: {instruction}
+    ## Some answers 
+    Allergy / Immunology / Bariatrics / Cardiovascular / Pulmonary / Neurology / Dentistry / General Medicine / Urology / Surgery
+    ## One Key Word(you must choose one from above): """
+
+
 def response(input_sentence):
     q = generate_prompt(input_sentence)
     inputs = tokenizer(q, return_tensors="pt").to(device=device)
@@ -156,14 +167,32 @@ def task_response(input_sentence):
     return output.split("Response: ")[1].strip()
 
 
+def transcripts_response(input_sentence):
+    q = transcripts_prompt(input_sentence)
+    inputs = tokenizer(q, return_tensors="pt",
+                       max_length=1024, truncation=True).to(device=device)
+    generate_ids = model.generate(**inputs, max_new_tokens=6)
+    output = tokenizer.batch_decode(generate_ids, skip_special_tokens=True)[0]
+    # print(output.split("Response: ")[1].strip())
+
+    res = output.split("One Key Word(you must choose one from above):")
+    if len(res) > 1:
+        print(res[1].strip())
+        return res[1].strip()
+    print()
+    return " "
+
+
 if __name__ == "__main__":
-    # while (1):
-    #     s = input()
-    #     if s == 'q':
-    #         break
-    #     format_response(s)
-    for patient in patient_data:
-        print(patient["description"])
-        a = task_response(patient["description"])
+    while (1):
+        s = input()
+        if s == 'q':
+            break
+        a = transcripts_response(s)
+        print("-----------------")
         print("res :", a)
-        print('true:', patient["disease_name"])
+    # for patient in patient_data:
+    #     print(patient["description"])
+    #     a = task_response(patient["description"])
+    #     print("res :", a)
+    #     print('true:', patient["disease_name"])
