@@ -12,6 +12,8 @@ run medical_llama.py to directly chat or query.
 
 run app.py to chat or query in a web.
 
+run ex.py to generate the medical transcripts results.
+
 ![test](./image/README/test.png)
 
 ![test2](./image/README/test2.png)
